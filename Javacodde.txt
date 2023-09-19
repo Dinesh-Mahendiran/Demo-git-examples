@@ -1,0 +1,54 @@
+private static final String ENCRYPTION = "admin";
+
+    public static String encryptPass(String password) {
+        StringBuilder encryptedPassword = new StringBuilder();
+        for (int i = 0; i < password.length(); i++) {
+            char c = password.charAt(i);
+            int index = ENCRYPTION.indexOf(c);
+            if (index == -1) {
+                throw new IllegalArgumentException("Invalid character in password: " + c);
+            }
+            encryptedPassword.append(ENCRYPTION.charAt((index + 1) % ENCRYPTION.length()));
+        }
+        return encryptedPassword.toString();
+    }
+
+    public static boolean authenticateLogin(String username, String password) {
+        String encryptedPassword = encryptPassword(password);
+       
+        String storedPassword = ...;
+        if (storedPassword.equals(encryptedPassword)) {
+            return true;
+        }
+        return false;
+    }
+
+    public static void main(String[] args) {
+        
+        String adminUsername = "admin";
+        String adminPassword = "admin"; 
+
+        
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter ID: ");
+        String inputUsername = scanner.nextLine();
+        System.out.println("Enter password: ");
+        String inputPassword = scanner.nextLine();
+
+        boolean isLoginSuccessful = authenticateLogin(adminUsername, inputPassword);
+        if (isLoginSuccessful) {
+            
+            System.out.println("Admin Options:");
+            System.out.println("1. Change password");
+            System.out.println("2. Update profile");
+            System.out.println("3. Create manager");
+            System.out.println("4. Update manager");
+            System.out.println("5. Remove manager");
+            System.out.println("6. Add inventory");
+            System.out.println("7. Update inventory");
+            System.out.println("8. Remove inventory");
+            System.out.println("9. View inventory");
+            System.out.println("10. Log out");
+        } else {
+            System.out.println("Login failed!");
+        }
